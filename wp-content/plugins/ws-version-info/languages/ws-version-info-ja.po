@@ -1,0 +1,255 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2023-12-22 20:36+0900\n"
+"PO-Revision-Date: 2023-12-22 20:36+0900\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;esc_html__;esc_attr__\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ws-version-info.php\n"
+
+#: ws-version-info.php:34
+msgid "Extract Version Info"
+msgstr "バージョン情報抽出"
+
+#: ws-version-info.php:35
+msgid "Extract Version Info for WordPress"
+msgstr "WordPress本体，テーマ，プラグインのバージョン情報を抽出"
+
+#: ws-version-info.php:36
+msgid "White Software"
+msgstr "ほわいとソフトウェア"
+
+#: ws-version-info.php:46
+msgid "Settings"
+msgstr "設定"
+
+#: ws-version-info.php:65 ws-version-info.php:66
+msgid "Version Info"
+msgstr "バージョン情報"
+
+#~ msgid "Manage Clinic DB"
+#~ msgstr "医院情報管理"
+
+#~ msgid "Taxonomy Settings"
+#~ msgstr "タクソノミー設定"
+
+#~ msgid "For Admin"
+#~ msgstr "管理用"
+
+#~ msgid "Saved"
+#~ msgstr "保存しました"
+
+#~ msgid "Area Category"
+#~ msgstr "地域"
+
+#~ msgid "Cure Category"
+#~ msgstr "治療メニュー"
+
+#~ msgid "Speciality Category"
+#~ msgstr "診療科目"
+
+#~ msgid "Save"
+#~ msgstr "保存する"
+
+#~ msgid "Mail"
+#~ msgstr "メール設定"
+
+#~ msgid "Web Meeting"
+#~ msgstr "Web会議設定"
+
+#~ msgid "Clinic Information"
+#~ msgstr "医院情報"
+
+#~ msgid "Add New Clinic"
+#~ msgstr "医院情報を追加"
+
+#~ msgid "Edit Clinic"
+#~ msgstr "医院情報を編集"
+
+#~ msgid "New Clinic"
+#~ msgstr "新しい医院情報"
+
+#~ msgid "View Clinic"
+#~ msgstr "医院情報を閲覧"
+
+#~ msgid "Search Clinic"
+#~ msgstr "医院情報を検索"
+
+#~ msgid "Interview"
+#~ msgstr "インタビュー"
+
+#~ msgid "Add New Interview"
+#~ msgstr "インタビューを追加"
+
+#~ msgid "Edit Interview"
+#~ msgstr "インタビューを編集"
+
+#~ msgid "New Interview"
+#~ msgstr "新しいインタビュー"
+
+#~ msgid "View Interview"
+#~ msgstr "インタビューを表示"
+
+#~ msgid "Search Interview"
+#~ msgstr "インタビューを検索"
+
+#~ msgid "Clinic Tag"
+#~ msgstr "医院タグ"
+
+#~ msgid "Update"
+#~ msgstr "更新"
+
+#~ msgid "Clinic Database"
+#~ msgstr "医院データベース"
+
+#~ msgid "Clinic Database for WordPress"
+#~ msgstr "WordPress用医院情報データベース"
+
+#~ msgid "Staff Attributes"
+#~ msgstr "技術者属性"
+
+#~ msgid "Create Pages"
+#~ msgstr "固定ページ作成"
+
+#~ msgid "Manage Database"
+#~ msgstr "Database管理"
+
+#~ msgid "Database Information"
+#~ msgstr "Database情報"
+
+#~ msgid "WordPress Database"
+#~ msgstr "WordPress Database"
+
+#~ msgid "Database Category"
+#~ msgstr "Databaseカテゴリー"
+
+#~ msgid "Database Tag"
+#~ msgstr "Databaseタグ"
+
+#~ msgid "Work"
+#~ msgstr "業務内容"
+
+#~ msgid "Type"
+#~ msgstr "工種"
+
+#~ msgid "Each lines shuold be written as \"MajorItem===MiddleItem===MinorItem\""
+#~ msgstr "一行ごとに「大項目===中項目===小項目」を記述"
+
+#~ msgid "Software in possession"
+#~ msgstr "保有ソフト"
+
+#~ msgid "Databse Information"
+#~ msgstr "Database情報"
+
+#~ msgid "Manage BIM/CIM"
+#~ msgstr "BIM/CIM管理"
+
+#~ msgid "BIM/CIM Information"
+#~ msgstr "BIM/CIM情報"
+
+#~ msgid "Edit BIM/CIM"
+#~ msgstr "BIM/CIM情報編集"
+
+#~ msgid "New BIM/CIM"
+#~ msgstr "新規BIM/CIM情報"
+
+#~ msgid "View BIM/CIM"
+#~ msgstr "BIM/CIM情報表示"
+
+#~ msgid "Search BIM/CIM"
+#~ msgstr "BIM/CIM情報検索"
+
+#~ msgid "BIM/CIM Category"
+#~ msgstr "BIM/CIMカテゴリー"
+
+#~ msgid "BIM/CIM Tag"
+#~ msgstr "BIM/CIMタグ"
+
+#~ msgid "Manage BIM/CIM Information"
+#~ msgstr "BIM/CIM情報管理"
+
+#~ msgid "Manage School"
+#~ msgstr "学校情報管理"
+
+#~ msgid "Edit School"
+#~ msgstr "学校情報を編集"
+
+#~ msgid "New School"
+#~ msgstr "学校情報を追加"
+
+#~ msgid "View School"
+#~ msgstr "学校情報を閲覧"
+
+#~ msgid "School Tag"
+#~ msgstr "学校タグ"
+
+#~ msgid "Achievement to Higher Education"
+#~ msgstr "進学実績"
+
+#~ msgid "Entrance Examination Information"
+#~ msgstr "入試情報"
+
+#~ msgid "Achievement"
+#~ msgstr "進学実績"
+
+#~ msgid "- Select WordPress User -"
+#~ msgstr "～ WordPressユーザーを選択 ～"
+
+#~ msgid "Postal Code"
+#~ msgstr "郵便番号"
+
+#~ msgid "Get Address"
+#~ msgstr "住所"
+
+#~ msgid "Address"
+#~ msgstr "住所"
+
+#~ msgid "Phone Number 1"
+#~ msgstr "電話番号1"
+
+#~ msgid "Phone Number 2"
+#~ msgstr "電話番号2"
+
+#~ msgid "E-mail Address 1"
+#~ msgstr "メールアドレス1"
+
+#~ msgid "E-mail Address 2"
+#~ msgstr "メールアドレス2"
+
+#~ msgid "Member Information"
+#~ msgstr "メンバー情報"
+
+#~ msgid "Member Tag"
+#~ msgstr "メンバータグ"
+
+#~ msgid "Admin Bar On/Off"
+#~ msgstr "管理バー表示設定"
+
+#~ msgid "Admin Bar for Each Role"
+#~ msgstr "管理バーを表示するユーザー権限"
+
+#~ msgid "Over Administrator"
+#~ msgstr "管理者以上"
+
+#~ msgid "Over Editor"
+#~ msgstr "編集者以上"
+
+#~ msgid "Over Publisher"
+#~ msgstr "投稿者以上"
+
+#~ msgid "Over Contributor"
+#~ msgstr "寄稿者以上"
+
+#~ msgid "Configure the display of Admin Bar for each user authority"
+#~ msgstr "ユーザー権限ごとに管理バーの表示/非表示を設定"
+
+#~ msgid "Admin Bar On/Off Plugin"
+#~ msgstr "管理バー表示設定プラグイン"
