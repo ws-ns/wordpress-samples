@@ -20,4 +20,8 @@ remove_action('wp_print_styles', 'print_emoji_styles');// 絵文字に関するC
 remove_action('admin_print_scripts', 'print_emoji_detection_script');// 絵文字に関するJavaScript
 remove_action('admin_print_styles', 'print_emoji_styles');// 絵文字に関するCSS
 
+
+//// Contact Form 7 で自動挿入されるPタグ、brタグを削除
+add_filter( 'wpcf7_autop_or_not', '__return_false' );
+
 ?>
