@@ -1,6 +1,8 @@
 <?php
 
-//// Child Theme Settings
+/**
+ * Child Theme Settings
+ */
 add_action( 'wp_enqueue_scripts', 'theme_enqueue_styles' );
 function theme_enqueue_styles() {
   wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
@@ -8,7 +10,9 @@ function theme_enqueue_styles() {
 }
 
 
-//// For Security
+/**
+ * For Security
+ */
 remove_action('wp_head', 'wp_generator');// WordPressのバージョン
 remove_action('wp_head', 'wp_shortlink_wp_head');// 短縮URLのlink
 remove_action('wp_head', 'wlwmanifest_link');// ブログエディターのマニフェストファイル
@@ -21,7 +25,22 @@ remove_action('admin_print_scripts', 'print_emoji_detection_script');// 絵文�
 remove_action('admin_print_styles', 'print_emoji_styles');// 絵文字に関するCSS
 
 
-//// Contact Form 7 で自動挿入されるPタグ、brタグを削除
+/**
+ * Contact Form 7 で自動挿入されるPタグ、brタグを削除
+ */
 add_filter( 'wpcf7_autop_or_not', '__return_false' );
+
+
+/**
+ * 投稿タイプ"post" のアーカイブを有効化し、スラッグ（URL）を設定
+ */
+// function ws_post_has_archive( $args, $post_type ) {
+//   if ( 'post' == $post_type ) {
+//     $args['rewrite'] = true;
+//     $args['has_archive'] = 'archive'; // 任意のスラッグ（URL）
+//   }
+//   return $args;
+// }
+// add_filter( 'register_post_type_args', 'ws_post_has_archive', 10, 2 );
 
 ?>
