@@ -26,6 +26,16 @@ remove_action('admin_print_styles', 'print_emoji_styles');// 絵文字に関す�
 
 
 /**
+ * WebP画像のアップロードを許可
+ */
+function ws_allow_webp_upload( $mimes ) {
+  $mimes['webp'] = 'image/webp';
+  return $mimes;
+}
+add_filter( 'upload_mimes', 'ws_allow_webp_upload' );
+
+
+/**
  * Contact Form 7 で自動挿入されるPタグ、brタグを削除
  */
 add_filter( 'wpcf7_autop_or_not', '__return_false' );
