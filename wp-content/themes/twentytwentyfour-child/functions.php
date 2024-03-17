@@ -26,13 +26,14 @@ remove_action('admin_print_styles', 'print_emoji_styles');// 絵文字に関す�
 
 
 /**
- * WebP画像のアップロードを許可
+ * WebPやSVGのアップロードを許可
  */
-function ws_allow_webp_upload( $mimes ) {
+function ws_allow_file_type_upload( $mimes ) {
   $mimes['webp'] = 'image/webp';
+  $mimes['webp'] = 'image/svg+xml';
   return $mimes;
 }
-add_filter( 'upload_mimes', 'ws_allow_webp_upload' );
+add_filter( 'upload_mimes', 'ws_allow_file_type_upload' );
 
 
 /**
