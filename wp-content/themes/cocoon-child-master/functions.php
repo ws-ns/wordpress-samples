@@ -20,6 +20,7 @@ remove_action('wp_head', 'rel_canonical');// カノニカル
 remove_action('wp_print_styles', 'print_emoji_styles');// 絵文字に関するCSS
 remove_action('admin_print_scripts', 'print_emoji_detection_script');// 絵文字に関するJavaScript
 remove_action('admin_print_styles', 'print_emoji_styles');// 絵文字に関するCSS
+add_filter( 'run_wptexturize', '__return_false' ); // 謎の空白が入るのを防止する
 
 
 /**
