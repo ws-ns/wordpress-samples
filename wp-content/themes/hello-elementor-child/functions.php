@@ -11,6 +11,15 @@ function theme_enqueue_styles() {
 
 
 /**
+ * Remove Hello-Elementor Styles
+ */
+add_action( 'wp_enqueue_scripts', function() {
+  wp_dequeue_style( 'hello-elementor' );
+  wp_dequeue_style( 'hello-elementor-theme-style' );
+}, 999 );
+
+
+/**
  * For Security
  */
 remove_action('wp_head', 'wp_generator');// WordPressのバージョン

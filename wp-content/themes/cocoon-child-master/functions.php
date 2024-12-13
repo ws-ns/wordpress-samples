@@ -8,6 +8,23 @@ add_editor_style();
 
 
 /**
+ * Remove Cocoon Styles
+ */
+add_action( 'wp_enqueue_scripts', function() {
+  // wp_dequeue_style( 'cocoon-style' );
+  // wp_dequeue_style( 'cocoon-keyframes' );
+  // wp_dequeue_style( 'font-awesome-style' );
+  // wp_dequeue_style( 'font-awesome5-style-update-style' );
+  // wp_dequeue_style( 'icomoon-style' );
+  // wp_dequeue_style( 'code-highlight-style' );
+  // wp_dequeue_style( 'baguettebox-style' );
+  // wp_dequeue_style( 'cocoon-skin-style' );
+  // wp_dequeue_style( 'cocoon-child-style' );
+  // wp_dequeue_style( 'cocoon-child-keyframes-style' );
+}, 999 );
+
+
+/**
  * For Security
  */
 remove_action('wp_head', 'wp_generator');// WordPressのバージョン
