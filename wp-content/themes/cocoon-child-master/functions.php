@@ -40,12 +40,48 @@ remove_action('admin_print_styles', 'print_emoji_styles');// 絵文字に関す�
 add_filter( 'run_wptexturize', '__return_false' ); // 謎の空白が入るのを防止する
 
 
+// ?author=n によるユーザー情報表示を禁止
+add_filter('author_rewrite_rules', '__return_empty_array');
+function ws_disable_author_archive() {
+    if (isset($_GET['author']) || preg_match('#/author/.+#', $_SERVER['REQUEST_URI'])) {
+        global $wp_query;
+        $wp_query->set_404();
+        status_header(404);
+        get_template_part(404); // 404.phpテンプレートを読み込み
+        exit();
+    }
+}
+add_action('init', 'ws_disable_author_archive');
+
+
+// Contact Form 以外のREST APIを停止
+function ws_deny_rest_api_except_permitted( $result, $wp_rest_server, $request ){
+  $permitted_routes = [ 'oembed', 'contact-form-7', 'akismet'];
+
+  $route = $request->get_route();
+
+  foreach ( $permitted_routes as $r ) {
+    if ( strpos( $route, "/$r/" ) === 0 ) return $result;
+  }
+
+  // Gutenberg（ユーザーが投稿やページの編集が可能な場合）
+  if ( current_user_can( 'edit_posts' ) || current_user_can( 'edit_pages' )) {
+    return $result;
+  }
+
+  return new WP_Error( 'rest_disabled', __( 'The REST API on this site has been disabled.' ), array( 'status' => rest_authorization_required_code() ) );
+}
+add_filter( 'rest_pre_dispatch', 'ws_deny_rest_api_except_permitted', 10, 3 );
+
+
+
 /**
- * WebPやSVGのアップロードを許可
+ * WebP, SVG, icoのアップロードを許可
  */
 function ws_allow_file_type_upload( $mimes ) {
   $mimes['webp'] = 'image/webp';
   $mimes['webp'] = 'image/svg+xml';
+  $mimes['ico']    = 'image/x-icon';
   return $mimes;
 }
 add_filter( 'upload_mimes', 'ws_allow_file_type_upload' );
