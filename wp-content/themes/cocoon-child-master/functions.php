@@ -41,7 +41,6 @@ add_filter( 'run_wptexturize', '__return_false' ); // 謎の空白が入るの�
 
 
 // ?author=n によるユーザー情報表示を禁止
-add_filter('author_rewrite_rules', '__return_empty_array');
 function ws_disable_author_archive() {
     if (isset($_GET['author']) || preg_match('#/author/.+#', $_SERVER['REQUEST_URI'])) {
         global $wp_query;
@@ -52,6 +51,7 @@ function ws_disable_author_archive() {
     }
 }
 add_action('init', 'ws_disable_author_archive');
+add_filter('author_rewrite_rules', '__return_empty_array');
 
 
 // Contact Form 以外のREST APIを停止
