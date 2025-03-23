@@ -20,6 +20,25 @@ add_action( 'wp_enqueue_scripts', function() {
 
 
 /**
+ * ACFで絵文字を保存できない問題対策
+ */ 
+// 保存前にエンコード
+function my_acf_update_value( $value ) {
+	return stripslashes(esc_attr(mb_encode_numericentity($value, [0x10000, 0x10FFFF, 0, 0xFFFFFF], 'UTF-8')));
+}
+
+// 読み込み後にデコード
+function my_acf_load_value( $value ) {
+	return esc_attr(mb_decode_numericentity($value, [0x10000, 0x10FFFF, 0, 0xFFFFFF], 'UTF-8'));
+}
+
+// acf/update_value、acf/load_valueともに
+// 修飾子が使えるので、必要なフィールドタイプを指定する。
+add_filter('acf/update_value/type=text', 'my_acf_update_value', 10, 1);
+add_filter('acf/load_value/type=text', 'my_acf_load_value', 10, 1);
+
+
+/**
  * For Security
  */
 remove_action('wp_head', 'wp_generator');// WordPressのバージョン
