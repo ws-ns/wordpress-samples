@@ -1,0 +1,77 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2023-06-26 15:06+0900\n"
+"PO-Revision-Date: 2023-06-26 15:07+0900\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.3.1\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;esc_html__\n"
+"X-Poedit-SearchPath-0: ws-notify-post.php\n"
+"X-Poedit-SearchPath-1: inc/class-main.php\n"
+
+#: inc/class-main.php:46 inc/class-main.php:47 inc/class-main.php:60
+msgid "Notification Settings"
+msgstr "記事公開通知設定"
+
+#: inc/class-main.php:65
+msgid "Send notification when an article has been published"
+msgstr "記事を公開すると通知を送信"
+
+#: inc/class-main.php:66
+msgid "Send notification when an article has been reserved for publication"
+msgstr "記事を公開予約すると通知を送信"
+
+#: inc/class-main.php:67
+msgid "Send notification when an article has been saved"
+msgstr "記事を保存すると通知を送信"
+
+#: inc/class-main.php:75
+msgid "Saved"
+msgstr "保存しました"
+
+#: inc/class-main.php:83
+msgid "Save"
+msgstr "保存する"
+
+#: inc/class-main.php:106
+msgid "Settings"
+msgstr "設定"
+
+#: inc/class-main.php:162
+msgid "The following article has been saved:"
+msgstr "以下の記事が保存されました"
+
+#: inc/class-main.php:174
+msgid "Post Saved"
+msgstr "記事を保存"
+
+#: inc/class-main.php:205
+msgid "The following article has been reserved for publication:"
+msgstr "以下の記事の公開が予約されました"
+
+#: inc/class-main.php:208
+msgid "The following article has been published:"
+msgstr "以下の記事が公開されました"
+
+#: inc/class-main.php:221
+msgid "Publication Reserved"
+msgstr "記事の公開予約"
+
+#: inc/class-main.php:221
+msgid "Post Published"
+msgstr "記事の公開"
+
+#. Description of the plugin
+msgid "Send notification when an article is posted"
+msgstr "記事を公開すると通知を送信"
+
+#. Plugin Name of the plugin
+msgid "Notify Post Plugin"
+msgstr "記事公開通知プラグイン"

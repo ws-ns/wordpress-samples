@@ -1,0 +1,95 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2023-10-24 10:59+0900\n"
+"PO-Revision-Date: 2023-10-24 11:00+0900\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;esc_html__;esc_attr__\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ws-front-login.php\n"
+"X-Poedit-SearchPath-1: inc/class-admin.php\n"
+"X-Poedit-SearchPath-2: inc/class-front-login.php\n"
+"X-Poedit-SearchPath-3: inc/class-shortcode.php\n"
+"X-Poedit-SearchPath-4: inc/defines.php\n"
+
+#: inc/class-admin.php:107 inc/class-admin.php:108 inc/class-admin.php:140
+#: inc/class-front-login.php:35
+msgid "Front Login"
+msgstr "フロントログイン"
+
+#: inc/class-admin.php:117 inc/class-admin.php:118
+msgid "Create Pages"
+msgstr "固定ページ作成"
+
+#: inc/class-admin.php:123 inc/class-admin.php:124 inc/class-admin.php:370
+msgid "For Admin"
+msgstr "管理用"
+
+#: inc/class-admin.php:141
+msgid "Select a page for login"
+msgstr "ログイン用の固定ページを選択"
+
+#: inc/class-admin.php:156
+msgid "Saved"
+msgstr "保存しました"
+
+#: inc/class-admin.php:183
+msgid "Save"
+msgstr "保存する"
+
+#: inc/class-admin.php:209 inc/class-admin.php:349
+msgid "Create a page that is needed but does not exist"
+msgstr "存在しない固定ページを作成"
+
+#: inc/class-admin.php:244 inc/class-admin.php:306
+msgid "Created"
+msgstr "作成しました"
+
+#: inc/class-admin.php:248 inc/class-admin.php:350
+msgid "Recreate all pages"
+msgstr "すべての固定ページを再生成"
+
+#: inc/class-admin.php:383
+msgid "Settings"
+msgstr "設定"
+
+#: inc/class-front-login.php:36
+msgid "Support logging from the front page"
+msgstr "管理画面ではなく固定ページでログインするのをサポート"
+
+#~ msgid "White Software"
+#~ msgstr "ほわいとソフトウェア"
+
+#~ msgid "Administrator"
+#~ msgstr "管理者"
+
+#~ msgid "Editor"
+#~ msgstr "編集者"
+
+#~ msgid "Author"
+#~ msgstr "投稿者"
+
+#~ msgid "Contributor"
+#~ msgstr "寄稿者"
+
+#~ msgid "Subscriber"
+#~ msgstr "購読者"
+
+#~ msgid "Admin Bar On/Off"
+#~ msgstr "管理バー表示設定"
+
+#~ msgid "Admin Bar for Each Role"
+#~ msgstr "管理バーを表示するユーザー権限"
+
+#~ msgid "Admin Bar On/Off Plugin"
+#~ msgstr "管理バー表示設定プラグイン"
+
+#~ msgid "Configure the display of Admin Bar for each user authority"
+#~ msgstr "ユーザー権限ごとに管理バーの表示/非表示を設定"
