@@ -227,7 +227,7 @@ END_OF_HTML;
          $flag_save &&
          $update === true &&
          $post->post_status == 'publish' &&
-         $this->ws_is_supported_post_type( $post->post_type )
+         $this->ws_is_supported_post_type( $post )
          ) {
 
       $mail_to = $options['ws-notify-mails'] ?? '';
@@ -284,7 +284,7 @@ END_OF_HTML;
            ( $flag_publish && in_array( $new_status, array( 'publish' ), true ) ) ||
            ( $flag_future  && in_array( $new_status, array( 'future'  ), true ) )
            ) &&
-         $this->ws_is_supported_post_type( $post->post_type )
+         $this->ws_is_supported_post_type( $post )
          ) {
 
       $mail_to = $options['ws-notify-mails'] ?? '';
