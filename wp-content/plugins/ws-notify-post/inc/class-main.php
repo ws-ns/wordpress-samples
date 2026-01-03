@@ -61,13 +61,13 @@ class WsNotifyPost {
   function ws_admin_init_proc_form() {
 
     // 権限チェック
-    if ( ! current_user_can( 'manage_options' ) ) {
+    if (  !current_user_can( 'manage_options' ) ) {
       // 権限がない場合は処理を中断
       return;
     }
 
     // Nonceチェック
-    if ( !isset( $_POST['ws-notify-post-nonce'] ) ||! wp_verify_nonce( $_POST['ws-notify-post-nonce'], 'ws-notify-post-action' ) ) {
+    if ( !isset( $_POST['ws-notify-post-nonce'] ) || !wp_verify_nonce( $_POST['ws-notify-post-nonce'], 'ws-notify-post-action' ) ) {
       // Nonceが無効な場合は処理を中断
       return;
     }
@@ -198,6 +198,24 @@ END_OF_HTML;
 
 
   ////////////////////////////////////////
+  //    通知対象の投稿タイプかチェック
+  ////////////////////////////////////////
+  function ws_is_supported_post_type( $post ) {
+      if ( empty($post) || empty($post->post_type) ) return false;
+      
+      // 自動保存やリビジョンは無視
+      if ( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE ) return false;
+      if ( wp_is_post_revision( $post->ID ) ) return false;
+
+      // 投稿タイプのオブジェクトを取得して、一般公開(public)されているタイプか確認
+      $post_type_obj = get_post_type_object( $post->post_type );
+      if ( $post_type_obj && $post_type_obj->public ) {
+          return true;
+      }
+      return false;
+  }
+
+  ////////////////////////////////////////
   //    記事更新時に通知
   ////////////////////////////////////////
   function ws_save_post( $post_id, $post, $update ) {
@@ -209,8 +227,7 @@ END_OF_HTML;
          $flag_save &&
          $update === true &&
          $post->post_status == 'publish' &&
-         !in_array( $post->post_type, array( 'attachment' ), true ) &&
-         is_singular( $post->post_type )
+         $this->ws_is_supported_post_type( $post->post_type )
          ) {
 
       $mail_to = $options['ws-notify-mails'] ?? '';
@@ -262,13 +279,12 @@ END_OF_HTML;
 
     // 下書きまたは申請待ち状態から公開されたら処理実行
     if (
-         in_array($old_status, array( 'new', 'draft', 'pending', 'future' ), true) &&
+         in_array( $old_status, array( 'new', 'draft', 'pending', 'future' ), true ) &&
          (
-           ( $flag_publish && in_array($new_status, array( 'publish' ), true ) ) ||
-           ( $flag_future  && in_array($new_status, array( 'future'  ), true ) )
+           ( $flag_publish && in_array( $new_status, array( 'publish' ), true ) ) ||
+           ( $flag_future  && in_array( $new_status, array( 'future'  ), true ) )
            ) &&
-         !in_array( $post->post_type, array( 'attachment' ), true ) &&
-         is_singular( $post->post_type )
+         $this->ws_is_supported_post_type( $post->post_type )
          ) {
 
       $mail_to = $options['ws-notify-mails'] ?? '';
@@ -283,13 +299,13 @@ END_OF_HTML;
           'Content-Type: text/plain; charset="UTF-8"',
         );
 
-        $subject = '【'.get_bloginfo('name').'】 ' . ( $new_status == 'future' ? __('Publication Reserved', 'ws-notify-post') : __('Post Published', 'ws-notify-post') );
-
         $bodies = array();
         if ( $new_status == 'future' ) {
+          $subject = '【'.get_bloginfo('name').'】 ' . __('Publication Reserved', 'ws-notify-post');
           $bodies[] = __('The following article has been reserved for publication:', 'ws-notify-post'); // '以下の記事を予約されました';
         }
         else {
+          $subject = '【'.get_bloginfo('name').'】 ' . __('Post Published', 'ws-notify-post');
           $bodies[] = __('The following article has been published:', 'ws-notify-post'); // '以下の記事を公開しました';
         }
         $bodies[] = '';
