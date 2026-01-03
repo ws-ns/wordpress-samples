@@ -10,7 +10,7 @@
  * Plugin URI: https://white-software.site/plugins/ws-notify-post.php
  * Description: Send notification when an article is posted
  * Author: White Software
- * Version: 0.0.1
+ * Version: 0.0.2
  * Author URI: https://white-software.site/
  *
  * Text Domain: ws-notify-post

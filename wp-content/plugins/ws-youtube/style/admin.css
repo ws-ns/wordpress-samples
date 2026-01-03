@@ -1,0 +1,79 @@
+
+hr.ws-hr {
+    margin: 1.0em 0;
+    padding: 0;
+    width: 100%;
+    border-top: 2px solid #6666ff;
+}
+
+div.ws-box {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-height: 80vh;
+    overflow: auto;
+}
+
+div.ws-box.bg-white {
+    background-color: #ffffff;
+}
+
+div.ws-box * {
+    box-sizing: border-box;
+}
+
+div.ws-box > div.ws-rss-item {
+    margin: 0.5%;
+    padding: 0.5%;
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+}
+
+div.ws-box > form * {
+    margin: 0;
+}
+
+div.ws-box > form textarea {
+    margin: 0;
+    padding: 0.5em;
+    width: 100%;
+    height: 10.0em;
+}
+
+div.ws-box > table {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+div.ws-box > table > thead > tr > th {
+    margin: 0;
+    padding: 2px 8px;
+    background-color: #ccffcc;
+    border: 1px solid #cccccc;
+    font-weight: bold;
+    text-align: center;
+}
+
+div.ws-box > table > tbody > tr > td {
+    margin: 0;
+    padding: 2px 8px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+}
+
+div.ws-save-message {
+    margin: 0;
+    padding: 1.0em;
+    width: 100%;
+    background-color: #ccffff;
+}
+
+.tagdiv-type blockquote p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #1f1f1f;
+    text-align: left;
+}

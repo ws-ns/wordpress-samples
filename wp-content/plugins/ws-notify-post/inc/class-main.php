@@ -6,7 +6,7 @@
 class WsNotifyPost {
 
   public $ws_plugin_name    = 'ws-notify-post';
-  public $ws_plugin_version = '0.0.1';
+  public $ws_plugin_version = '0.0.2';
 
   public $ws_plugin_path = '';
   public $ws_plugin_url = '';
@@ -33,6 +33,9 @@ class WsNotifyPost {
     // 記事更新時に通知
     add_action( 'save_post', array( $this, 'ws_save_post'), 10, 3 );
 
+    // フォーム処理
+    add_action( 'admin_init', array( $this, 'ws_admin_init_proc_form' ) );
+
   }
 
 
@@ -54,10 +57,57 @@ class WsNotifyPost {
   }
 
 
+  ////////// フォーム処理
+  function ws_admin_init_proc_form() {
+
+    // 権限チェック
+    if ( ! current_user_can( 'manage_options' ) ) {
+      // 権限がない場合は処理を中断
+      return;
+    }
+
+    // Nonceチェック
+    if ( !isset( $_POST['ws-notify-post-nonce'] ) ||! wp_verify_nonce( $_POST['ws-notify-post-nonce'], 'ws-notify-post-action' ) ) {
+      // Nonceが無効な場合は処理を中断
+      return;
+    }
+
+    // フォームが送信されたか
+    if ( !empty($_REQUEST['ws-type']) &&
+         $_REQUEST['ws-type'] == 'ws-notify-post' ) {
+
+      $options = get_option( 'ws-notify-post-settings', array() );
+      $arr = array(
+        'ws-notify-publish' => __('Send notification when an article has been published', 'ws-notify-post'),
+        'ws-notify-future'  => __('Send notification when an article has been reserved for publication', 'ws-notify-post'),
+        'ws-notify-save'    => __('Send notification when an article has been saved', 'ws-notify-post'),
+      );
+
+      foreach ( $arr as $key => $val ) {
+        $options[$key] = ( !empty($_REQUEST[$key]) ? true : false );
+      }
+      $options['ws-notify-mails'] = $_REQUEST['ws-notify-mails'] ?? '';
+      update_option( 'ws-notify-post-settings', $options );
+
+      // echo '<div style="margin: 1.0rem 0; padding: 1.0rem; background: #cff;">', __('Saved', 'ws-notify-post'), '</div>';
+      add_settings_error(
+        'ws-notify-post-messages',
+        'ws-notify-post-saved',
+        '保存しました ',
+        'updated'
+      );
+    }
+
+    return;
+  }
+
+
   ////////// 管理画面
   function ws_admin_menu_page1() {
 
     echo '<h1>', __('Notification Settings', 'ws-notify-post'), '</h1>', PHP_EOL;
+
+    // settings_errors( 'ws-notify-post-messages' );
 
     $options = get_option( 'ws-notify-post-settings', array() );
 
@@ -67,26 +117,26 @@ class WsNotifyPost {
       'ws-notify-save'    => __('Send notification when an article has been saved', 'ws-notify-post'),
     );
 
-    if (
-         !empty($_REQUEST['ws-type']) &&
-         $_REQUEST['ws-type'] == 'ws-notify-post' &&
-         check_admin_referer( 'ws-notify-post' )
-         ) {
-      foreach ( $arr as $key => $val ) {
-        $options[$key] = ( !empty($_REQUEST[$key]) ? true : false );
-      }
-      $options['ws-mails'] = $_REQUEST['ws-mails'] ?? '';
-      update_option( 'ws-notify-post-settings', $options );
-      echo '<div style="margin: 1.0rem 0; padding: 1.0rem; background: #cff;">', __('Saved', 'ws-notify-post'), '</div>';
-    }
+//    if (
+//         !empty($_REQUEST['ws-type']) &&
+//         $_REQUEST['ws-type'] == 'ws-notify-post' &&
+//         check_admin_referer( 'ws-notify-post' )
+//         ) {
+//      foreach ( $arr as $key => $val ) {
+//        $options[$key] = ( !empty($_REQUEST[$key]) ? true : false );
+//      }
+//      $options['ws-notify-mails'] = $_REQUEST['ws-notify-mails'] ?? '';
+//      update_option( 'ws-notify-post-settings', $options );
+//      echo '<div style="margin: 1.0rem 0; padding: 1.0rem; background: #cff;">', __('Saved', 'ws-notify-post'), '</div>';
+//    }
 
-    $html = wp_nonce_field( 'ws-notify-post', '_wpnonce', true, true );
+    $html = wp_nonce_field( 'ws-notify-post-action', 'ws-notify-post-nonce', true, true );
     foreach ( $arr as $key => $val ) {
       $html .= '<div><label><input type="checkbox" name="' . esc_attr($key) . '" value="1" ' . ( !empty($options[$key]) ? 'checked' : '' ) . ' /> ' . esc_html($val) . '</label></div>';
     }
 
     $str_save  = __('Save', 'ws-notify-post');
-    $str_mails = esc_attr( $options['ws-mails'] ?? '' );
+    $str_mails = esc_attr( $options['ws-notify-mails'] ?? '' );
 
     echo <<<END_OF_HTML
 
@@ -95,7 +145,7 @@ class WsNotifyPost {
       <input type="hidden" name="ws-type" value="ws-notify-post" />
       {$html}
       <hr />
-      <div><label>メールアドレス（空欄の場合はWordPress管理者宛, 複数の場合はカンマ区切り）<br/><input type="text" name="ws-mails" value="{$str_mails}" style="width:100%;" /></label></div>
+      <div><label>メールアドレス（空欄の場合はWordPress管理者宛, 複数の場合はカンマ区切り）<br/><input type="text" name="ws-notify-mails" value="{$str_mails}" style="width:100%;" /></label></div>
       <div><input type="submit" class="button button-primary" value="{$str_save}" style="margin: 1.0rem 0 0;" />
     </form>
   </section>
@@ -159,19 +209,19 @@ END_OF_HTML;
          $flag_save &&
          $update === true &&
          $post->post_status == 'publish' &&
-         (
-           $post->post_type == 'post' ||
-           $post->post_type == 'page'
-          )
+         !in_array( $post->post_type, array( 'attachment' ), true ) &&
+         is_singular( $post->post_type )
          ) {
 
-      $mail_to = $options['ws-mails'] ?? '';
+      $mail_to = $options['ws-notify-mails'] ?? '';
 
       $admin_email = get_bloginfo('admin_email');
+      $admin_name  = get_bloginfo('name');
 
       if ( !empty($mail_to) || !empty($admin_email) ) {
         $headers = array(
-          'From: ' . $admin_email,
+          // 'From: ' . $admin_email,
+          'From: =?UTF-8?B?' . base64_encode($admin_name) . '?= <' . $admin_email . '>',
           'Content-Type: text/plain; charset="UTF-8"',
         );
 
@@ -212,20 +262,24 @@ END_OF_HTML;
 
     // 下書きまたは申請待ち状態から公開されたら処理実行
     if (
-         in_array($old_status, array( 'new', 'draft', 'pending' ), true) &&
+         in_array($old_status, array( 'new', 'draft', 'pending', 'future' ), true) &&
          (
            ( $flag_publish && in_array($new_status, array( 'publish' ), true ) ) ||
            ( $flag_future  && in_array($new_status, array( 'future'  ), true ) )
-           )
+           ) &&
+         !in_array( $post->post_type, array( 'attachment' ), true ) &&
+         is_singular( $post->post_type )
          ) {
 
-      $mail_to = $options['ws-mails'] ?? '';
+      $mail_to = $options['ws-notify-mails'] ?? '';
 
       $admin_email = get_bloginfo('admin_email');
+      $admin_name  = get_bloginfo('name');
 
       if ( !empty($mail_to) || !empty($admin_email) ) {
         $headers = array(
-          'From: ' . $admin_email,
+          // 'From: ' . $admin_email,
+          'From: =?UTF-8?B?' . base64_encode($admin_name) . '?= <' . $admin_email . '>',
           'Content-Type: text/plain; charset="UTF-8"',
         );
 
