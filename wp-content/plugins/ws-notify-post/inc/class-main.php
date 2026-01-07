@@ -279,10 +279,13 @@ END_OF_HTML;
 
     // 下書きまたは申請待ち状態から公開されたら処理実行
     if (
-         in_array( $old_status, array( 'new', 'draft', 'pending', 'auto-draft', 'private', 'future' ), true ) &&
-         (
-           ( $flag_publish && in_array( $new_status, array( 'publish' ), true ) ) ||
-           ( $flag_future  && in_array( $new_status, array( 'future'  ), true ) )
+        (
+         ( $flag_publish &&
+           in_array( $old_status, array( 'new', 'draft', 'pending', 'auto-draft', 'private', 'future' ), true ) &&
+           in_array( $new_status, array( 'publish' ), true ) ) ||
+         ( $flag_future  &&
+           in_array( $old_status, array( 'new', 'draft', 'pending', 'auto-draft', 'private' ), true ) &&
+           in_array( $new_status, array( 'future'  ), true ) )
            ) &&
          $this->ws_is_supported_post_type( $post )
          ) {
