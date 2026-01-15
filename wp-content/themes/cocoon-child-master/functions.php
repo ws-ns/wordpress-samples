@@ -104,3 +104,20 @@ add_filter( 'wpcf7_autop_or_not', '__return_false' );
 //   return $args;
 // }
 // add_filter( 'register_post_type_args', 'ws_post_has_archive', 10, 2 );
+
+
+/**
+ * Google Adsense を管理画面で無効化する
+ */
+add_action('admin_init', function() {
+    // 管理画面でのAdSense関連スクリプトを完全に除去
+    global $wp_scripts;
+    if (isset($wp_scripts->registered)) {
+        foreach ($wp_scripts->registered as $handle => $script) {
+            if (strpos($script->src, 'adsbygoogle') !== false || 
+                strpos($script->src, 'pagead') !== false) {
+                wp_deregister_script($handle);
+            }
+        }
+    }
+});
