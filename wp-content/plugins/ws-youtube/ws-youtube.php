@@ -4,7 +4,7 @@
   Plugin URI: https://wtpage.info/
   Description: Youtubeの最新動画をAPIで取得して自動投稿
   Author: white-software
-  Version: 0.0.6
+  Version: 0.0.7
   Author URI: https://wtpage.info/
 */
 
@@ -22,8 +22,8 @@ $_ws_youtube  = new WsYoutube;
 class WsYoutube {
 
   public $ws_plugin_name        = '自動投稿Youtube';
-  public $ws_plugin_version     = '0.0.6';
-  public $ws_youtube_db_version = '0.0.6';
+  public $ws_plugin_version     = '0.0.7';
+  public $ws_youtube_db_version = '0.0.7';
   public $ws_this_plugin = '';
 
   private $db_table_youtube = '';
@@ -956,11 +956,39 @@ class WsYoutube {
             'fields' => 'items(snippet(title,description,thumbnails,publishedAt,channelId,channelTitle),statistics(viewCount,likeCount))'
         ]);
 
-        // $videoData = fetchYoutubeApi($videoApiUrl);
-        $videoData = '';
-        $response = @file_get_contents($videoApiUrl);
-        if ( $response === false ) {
-          echo '<div style="color:red;">Error: 通信エラー: APIへの接続に失敗しました</div>';
+        // エラー時もレスポンスを取得する設定
+        $options = [
+            'http' => [
+                'ignore_errors' => true
+            ]
+        ];
+        $context = stream_context_create($options);
+
+        // API実行
+        $response = file_get_contents($videoApiUrl, false, $context);
+        $videoData = null; // 初期化
+
+        // 1. 通信そのものが失敗、またはHTTPステータスが200以外の場合
+        if ($response === false || strpos($http_response_header[0], '200') === false) {
+            
+            $status = isset($http_response_header[0]) ? $http_response_header[0] : 'Unknown Status';
+            $errorDetails = '詳細不明';
+            
+            if ($response) {
+                $json = json_decode($response, true);
+                if (isset($json['error']['message'])) {
+                    $errorDetails = $json['error']['message'];
+                } elseif (isset($json['error']['errors'][0]['reason'])) {
+                    $errorDetails = $json['error']['errors'][0]['reason'];
+                }
+            }
+
+            echo '<div style="color:red; border:1px solid red; padding:10px; margin-bottom:10px;">';
+            echo '<strong>動画情報の取得に失敗しました (API Error)</strong><br>';
+            echo 'Status: ' . htmlspecialchars($status) . '<br>';
+            echo 'Message: ' . htmlspecialchars($errorDetails);
+            echo '</div>';
+
         }
         else {
           $videoData = json_decode($response, true);
@@ -1009,17 +1037,66 @@ class WsYoutube {
                 'fields'     => 'items(snippet(topLevelComment(snippet(authorDisplayName,authorProfileImageUrl,textDisplay,likeCount,publishedAt))))'
             ]);
 
-            // $commentData = fetchYoutubeApi($commentApiUrl);
-            $response = @file_get_contents($commentApiUrl);
-            if ( $response === false ) {
-               echo '<div style="color:red;">Error: 通信エラー: APIへの接続に失敗しました</div>';
+            // 【変更点1】4xx, 5xxエラー時でもレスポンス本文(エラー詳細JSON)を取得する設定
+            $options = [
+                'http' => [
+                    'ignore_errors' => true
+                ]
+            ];
+            $context = stream_context_create($options);
+
+            // 【変更点2】@を外し、コンテキスト($context)を第3引数に渡す
+            $response = file_get_contents($commentApiUrl, false, $context);
+
+            $errorFlag = false;
+
+            // 【変更点3】レスポンスヘッダーを確認して成功/失敗を判定
+            // $http_response_header は file_get_contents 実行時に自動生成される変数です
+            if ($response === false || strpos($http_response_header[0], '200') === false) {
+                
+                // レスポンスがあればJSONを解析
+                $json = $response ? json_decode($response, true) : null;
+                
+                // エラー理由(reason)を取得
+                // ネストが深いため、存在チェックをしつつ取得します
+                $reason = '';
+                if (isset($json['error']['errors'][0]['reason'])) {
+                    $reason = $json['error']['errors'][0]['reason'];
+                }
+
+                // --- ここで判定します ---
+                if ($reason === 'commentsDisabled') {
+                    // コメントオフの場合の特別な表示
+                    echo '<div style="color:orange;">この動画はコメント機能が無効（オフ）になっています。</div>';
+                    $errorFlag = false;
+                }
+                else {
+                    // それ以外の通常エラー（APIキー間違い、通信エラーなど）
+                    $status = isset($http_response_header[0]) ? $http_response_header[0] : 'Unknown Status';
+                    $message = isset($json['error']['message']) ? $json['error']['message'] : '詳細不明';
+                    
+                    echo '<div style="color:red; border:1px solid red; padding:10px;">';
+                    echo '<strong>APIエラー:</strong> ' . htmlspecialchars($status) . '<br>';
+                    echo 'Reason: ' . htmlspecialchars($reason) . '<br>';
+                    echo 'Message: ' . htmlspecialchars($message);
+                    echo '</div>';
+                    $errorFlag = true;
+                }
+
+                $commentData = null;
             }
             else {
               $commentData = json_decode($response, true);
+            }
+
+            if ( $errorFlag === false ) {
 
               echo '<h2>コメント (上位', $maxNum, '件)</h2>';
 
-              if ( isset($commentData['error']) ) {
+              if ( $commentData === null ) {
+                echo '<div style="color:red;">Error: コメントはオフです</div>';
+              }
+              else if ( isset($commentData['error']) ) {
                 // 通信エラーまたはAPIエラー（コメント無効など）
                 echo '<div style="color:red;">Error: コメントを取得できませんでした。</div>';
                 if ( isset($commentData['error']['message']) ) { // APIからのエラーメッセージがある場合
