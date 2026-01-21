@@ -52,7 +52,7 @@ section.accordion-box > div.accordion-item > div.accordion-body {
 section.ws-youtube {
     margin: 0;
     padding: 16px 16px 16px 16px;
-    background-color: #ffffff;
+    background-color: transparent;
 }
 
 section.ws-youtube h2.youtube-title {
@@ -120,7 +120,7 @@ section.ws-youtube div.youtube-comment {
     margin: 16px 8px;
     padding: 8px;
     border: 1px solid #cccccc;
-    background-color: #f0fff0;
+    background-color: #f8fff8;
     border-radius: 8px;
     box-shadow: 0 2px 2px #cccccc;
 }

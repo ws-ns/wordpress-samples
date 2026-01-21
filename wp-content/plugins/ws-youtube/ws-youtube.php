@@ -4,7 +4,7 @@
   Plugin URI: https://wtpage.info/
   Description: Youtubeの最新動画をAPIで取得して自動投稿
   Author: white-software
-  Version: 0.0.5
+  Version: 0.0.6
   Author URI: https://wtpage.info/
 */
 
@@ -22,8 +22,8 @@ $_ws_youtube  = new WsYoutube;
 class WsYoutube {
 
   public $ws_plugin_name        = '自動投稿Youtube';
-  public $ws_plugin_version     = '0.0.5';
-  public $ws_youtube_db_version = '0.0.5';
+  public $ws_plugin_version     = '0.0.6';
+  public $ws_youtube_db_version = '0.0.6';
   public $ws_this_plugin = '';
 
   private $db_table_youtube = '';
@@ -104,20 +104,20 @@ class WsYoutube {
     $plugin_url  = plugin_dir_url( __FILE__ );
 
     // スタイルシートの読み込み
-    $css = $plugin_path.'style/common.css';
+    $css = $plugin_path.'css/common.css';
     if ( file_exists($css) ) {
       wp_enqueue_style( 'ws-youtube-css',
-                        $plugin_url.'style/common.css?'.filemtime( $css ),
+                        $plugin_url.'css/common.css',
                         array(),
                         filemtime( $css )
                        );
     }
  
     // JavaScript の読み込み
-    $js = $plugin_path.'/script/common.js';
+    $js = $plugin_path.'/js/common.js';
     if ( file_exists($js) ) {
       wp_enqueue_script( 'ws-youtube-js',
-                         $plugin_url.'script/common.js?'.filemtime( $js ),
+                         $plugin_url.'js/common.js',
                          array('jquery'),
                          filemtime( $js )
                        );
@@ -136,28 +136,28 @@ class WsYoutube {
     $plugin_url  = plugin_dir_url( __FILE__ );
 
     // スタイルシートの読み込み
-    $css = $plugin_path.'style/admin.css';
+    $css = $plugin_path.'css/admin.css';
     if ( file_exists($css) ) {
       wp_enqueue_style( 'ws-youtube-admin-css',
-                        $plugin_url.'style/admin.css?'.filemtime( $css ),
+                        $plugin_url.'css/admin.css',
                         array(),
                         filemtime( $css )
                        );
     }
-    $css = $plugin_path.'style/common.css';
+    $css = $plugin_path.'css/common.css';
     if ( file_exists($css) ) {
       wp_enqueue_style( 'ws-youtube-common-css',
-                        $plugin_url.'style/common.css?'.filemtime( $css ),
+                        $plugin_url.'css/common.css',
                         array(),
                         filemtime( $css )
                        );
     }
  
     // JavaScript の読み込み
-    $js = $plugin_path.'/script/admin.js';
+    $js = $plugin_path.'/js/admin.js';
     if ( file_exists($js) ) {
       wp_enqueue_script( 'ws-youtube-admin-js',
-                         $plugin_url.'script/admin.js?'.filemtime( $js ),
+                         $plugin_url.'js/admin.js',
                          array('jquery'),
                          filemtime( $js )
                        );
@@ -165,7 +165,7 @@ class WsYoutube {
     $js = $plugin_path.'/script/common.js';
     if ( file_exists($js) ) {
       wp_enqueue_script( 'ws-youtube-js',
-                         $plugin_url.'script/common.js?'.filemtime( $js ),
+                         $plugin_url.'js/common.js',
                          array('jquery'),
                          filemtime( $js )
                        );
