@@ -55,6 +55,11 @@ section.ws-youtube {
     background-color: transparent;
 }
 
+section.ws-youtube .video-container {
+    width: 100%;
+    max-width: 100%;
+}
+
 section.ws-youtube h2.youtube-title {
     color: #1f1f1f;
     font-size: 20px;
@@ -68,6 +73,11 @@ section.ws-youtube div.youtube-date {
     font-weight: 400;
     text-align: left;
     opacity: 0.7;
+}
+
+section.ws-youtube div.youtube-date a {
+    font-size: 125%;
+    opacity: 1.0;
 }
 
 section.ws-youtube div.youtube-link {
