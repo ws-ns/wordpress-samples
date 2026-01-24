@@ -28,7 +28,9 @@ add_filter( 'run_wptexturize', '__return_false' ); // 謎の空白が入るの�
 
 // ?author=n によるユーザー情報表示を禁止
 function ws_disable_author_archive() {
-    if (isset($_GET['author']) || preg_match('#/author/.+#', $_SERVER['REQUEST_URI'])) {
+    if ( is_admin() ) reutrn;
+
+    if ( isset($_GET['author']) || preg_match('#/author/.+#', $_SERVER['REQUEST_URI']) ) {
         global $wp_query;
         $wp_query->set_404();
         status_header(404);
