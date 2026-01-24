@@ -94,7 +94,7 @@ add_filter( 'rest_pre_dispatch', 'ws_deny_rest_api_except_permitted', 10, 3 );
  */
 function ws_allow_file_type_upload( $mimes ) {
   $mimes['webp'] = 'image/webp';
-  $mimes['webp'] = 'image/svg+xml';
+  $mimes['svg']  = 'image/svg+xml';
   $mimes['ico']  = 'image/x-icon';
   return $mimes;
 }
