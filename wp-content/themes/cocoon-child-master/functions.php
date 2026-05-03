@@ -40,6 +40,13 @@ remove_action('admin_print_styles', 'print_emoji_styles');// 絵文字に関す�
 add_filter( 'run_wptexturize', '__return_false' ); // 謎の空白が入るのを防止する
 
 
+// 「リンク」メニューを削除
+function ws_remove_menus() {
+    remove_menu_page( 'link-manager.php' );
+}
+add_action( 'admin_menu', 'ws_remove_menus' );
+
+
 // ?author=n によるユーザー情報表示を禁止
 function ws_disable_author_archive() {
     if ( is_admin() ) return;
