@@ -4,6 +4,53 @@
  * バグが含まれているとWordPressが完全停止するため要注意
  */
 
+if ( !defined( 'ABSPATH' ) ) exit;
+
+
+/**
+ * オリジナルテーマ設定
+ */
+if ( ! function_exists( 'ws_custom_theme_setup' ) ) :
+  function ws_custom_theme_setup() {
+    // 1. Titleタグの自動出力
+    // <head>内に<title>タグを自動生成します。
+    add_theme_support( 'title-tag' );
+
+    // 2. アイキャッチ画像の有効化
+    // 投稿や固定ページでアイキャッチ画像（サムネイル）を設定できるようにします。
+    add_theme_support( 'post-thumbnails' );
+
+    // 3. ナビゲーションメニューの登録
+    // 管理画面の「外観」>「メニュー」から設定できるメニュー領域を作成します。
+    register_nav_menus( array(
+      'primary' => 'メインメニュー',
+      'footer'  => 'フッターメニュー',
+    ) );
+
+    // 4. HTML5マークアップのサポート
+    // 検索フォーム、コメントフォームなどを正しいHTML5で出力します。
+    add_theme_support( 'html5', array(
+      'search-form',
+      'comment-form',
+      'comment-list',
+      'gallery',
+      'caption',
+      'style',
+      'script',
+    ) );
+
+    // 5. ブロックエディター（Gutenberg）の基本スタイルのサポート
+    add_theme_support( 'wp-block-styles' );
+
+    // 6. 画像などの「幅広」「全幅」アライメントのサポート
+    add_theme_support( 'align-wide' );
+        
+    // 7. エディターにフロントエンドと同じCSSを読み込ませる（editor-style.cssがある場合）
+    // add_editor_style( 'editor-style.css' ); 
+  }
+endif;
+add_action( 'after_setup_theme', 'ws_custom_theme_setup' );
+
 
 /**
  * For Security
@@ -21,23 +68,27 @@ remove_action('admin_print_styles', 'print_emoji_styles');// 絵文字に関す�
 add_filter( 'run_wptexturize', '__return_false' ); // 謎の空白が入るのを防止する
 
 
-// ?author=n によるユーザー情報表示を禁止
+/**
+ * ?author=n によるユーザー情報表示を禁止
+ */
 function ws_disable_author_archive() {
-    if ( is_admin() ) return;
+  if ( is_admin() ) return;
 
-    if ( isset($_GET['author']) || preg_match('#/author/.+#', $_SERVER['REQUEST_URI']) ) {
-        global $wp_query;
-        $wp_query->set_404();
-        status_header(404);
-        get_template_part(404); // 404.phpテンプレートを読み込み
-        exit();
-    }
+  if ( isset($_GET['author']) || preg_match('#/author/.+#', $_SERVER['REQUEST_URI']) ) {
+    global $wp_query;
+    $wp_query->set_404();
+    status_header(404);
+    get_template_part(404); // 404.phpテンプレートを読み込み
+    exit();
+  }
 }
 add_action('init', 'ws_disable_author_archive');
 add_filter('author_rewrite_rules', '__return_empty_array');
 
 
-// Contact Form 以外のREST APIを停止
+/**
+ * Contact Form 以外のREST APIを停止
+ */
 function ws_deny_rest_api_except_permitted( $result, $wp_rest_server, $request ){
   $permitted_routes = [ 'oembed', 'contact-form-7', 'akismet'];
 
@@ -57,7 +108,6 @@ function ws_deny_rest_api_except_permitted( $result, $wp_rest_server, $request )
 add_filter( 'rest_pre_dispatch', 'ws_deny_rest_api_except_permitted', 10, 3 );
 
 
-
 /**
  * WebP, SVG, icoのアップロードを許可
  */
@@ -68,6 +118,7 @@ function ws_allow_file_type_upload( $mimes ) {
   return $mimes;
 }
 add_filter( 'upload_mimes', 'ws_allow_file_type_upload' );
+
 
 /**
  * Contact Form 7 で自動挿入されるPタグ、brタグを削除
