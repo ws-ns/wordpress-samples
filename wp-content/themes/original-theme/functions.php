@@ -138,4 +138,23 @@ add_filter( 'wpcf7_autop_or_not', '__return_false' );
 // }
 // add_filter( 'register_post_type_args', 'ws_post_has_archive', 10, 2 );
 
+
+/**
+ * 全ページのtitleを強制的に共通化する
+ */
+// add_filter('pre_get_document_title', function($title) {
+//   return '株式会社Beacon｜営業代行・販売支援・インターン・新卒採用【東京】';
+// });
+
+
+/**
+ * 全ページの meta name="description" を共通化する
+ */
+// add_action('wp_head', function() {
+//   $description = '株式会社Beaconは、Wi-Fi・新電力・ガス・ウォーターサーバーなどの営業代行・販売支援を行う会社です。再現性のある営業教育と成果を正当に評価する仕組みを通じて、お客様への価値提供と人材育成を実現しています。インターン・新卒採用も積極的に募集しています。';
+//   // 属性値として安全に出力
+//   echo '<meta name="description" content="' . esc_attr($description) . '">' . "\n";
+// }, 1);
+
+
 ?>
