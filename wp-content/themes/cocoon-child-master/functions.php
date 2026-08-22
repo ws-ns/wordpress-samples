@@ -130,3 +130,71 @@ add_action('admin_init', function() {
         }
     }
 });
+
+
+/**
+ * 全ページのtitleを強制的に共通化する
+ */
+// add_filter('pre_get_document_title', function($title) {
+//   return 'キッチンカー出店ナビの王様 | 主催者向け安心マッチングサービス';
+// });
+
+
+/**
+ * 全ページの meta name="description" を共通化する
+ */
+// add_action('wp_head', function() {
+//   $description = 'キッチンカーを呼びたい主催者・施設担当者のための出店依頼サービス。審査制×運営代行×売れる車両の安心マッチングで、イベント企画や土地活用をサポートします。';
+//   // 属性値として安全に出力
+//   echo '<meta name="description" content="' . esc_attr($description) . '">' . "\n";
+// }, 1);
+
+
+/**
+ * カラムの見出しを追加（一番右に追加）
+ */
+// function ws_add_custom_thumbnail_column( $columns ) {
+//   // 配列の最後に追加することで、一覧テーブルの一番右に配置されます
+//   $columns['thumbnail'] = 'アイキャッチ';
+//   return $columns;
+// }
+// 通常の「投稿(post)」用フック
+// add_filter( 'manage_post_posts_columns', 'ws_add_custom_thumbnail_column' );
+// カスタム投稿用フック
+// add_filter( 'manage_industry_posts_columns', 'ws_add_custom_thumbnail_column' );
+// add_filter( 'manage_tech_posts_columns', 'ws_add_custom_thumbnail_column' );
+
+
+/**
+ * カラムの中身（実際の画像）を出力
+ */
+// function ws_display_custom_thumbnail_column( $column_name, $post_id ) {
+//   if ( 'thumbnail' === $column_name ) {
+//     $thumbnail_id = get_post_thumbnail_id( $post_id );
+//         
+//     if ( $thumbnail_id ) {
+//       // 画像が存在する場合、50x50のサイズで出力 (サイズは自由に変更可能です)
+//       echo get_the_post_thumbnail( $post_id, array( 50, 50 ) );
+//     }
+//     else {
+//       // 画像がない場合のテキスト
+//       echo '-';
+//     }
+//   }
+// }
+// add_action( 'manage_post_posts_custom_column', 'ws_display_custom_thumbnail_column', 10, 2 );
+// add_action( 'manage_industry_posts_custom_column', 'ws_display_custom_thumbnail_column', 10, 2 );
+// add_action( 'manage_tech_posts_custom_column', 'ws_display_custom_thumbnail_column', 10, 2 );
+
+
+/**
+ * 【オプション】表示崩れを防ぐためのCSS調整
+ * アイキャッチ画像の列幅が広がりすぎないように幅を固定します
+ */
+// function ws_add_custom_thumbnail_column_css() {
+//   echo '<style>
+//         .column-thumbnail { width: 80px; text-align: center !important; }
+//         .column-thumbnail img { max-width: 100%; height: auto; }
+//   </style>';
+// }
+// add_action( 'admin_print_styles-edit.php', 'ws_add_custom_thumbnail_column_css' );
